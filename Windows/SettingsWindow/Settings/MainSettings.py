@@ -8,11 +8,10 @@ class Ui_MainSettings(object):
         Form.setFixedSize(480, 190)
         font = QFont()
         font.setPointSize(10)
-        self.centralwidget = QWidget(Form)
-        # self.setCentralWidget(self.centralwidget)
+        self.centralwidget = QWidget()
+        self.setCentralWidget(self.centralwidget)
 
-        self.gridLayout = QGridLayout(Form)
-        self.gridLayout.setObjectName("gridLayout")
+        self.gridLayout = QGridLayout()
 
         self.NamTeams_lbl = QLabel("Name of teams")
         self.NamTeams_lbl.setFont(font)

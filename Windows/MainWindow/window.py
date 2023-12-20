@@ -18,14 +18,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def settings_menu(self):
         self.MSetwindow = MainSettings(self)
-        self.MSetwindow.finished.connect(self.on_dialog_closed)  # Связываем сигнал закрытия подокна со слотом
         self.MSetwindow.show()
         self.setEnabled(False)
         self.MSetwindow.setEnabled(True)
 
-    def on_dialog_closed(self):
-        # Разблокировать основное окно при закрытии подокна
+    def on_MSetwindow_closed(self):
         self.setEnabled(True)
+
+    def closeEvent(self, event):
+        # Обработка закрытия главного окна
+        if hasattr(self, 'MSetwindow') and self.MSetwindow.isVisible():
+            self.MSetwindow.close()
+
 
     def close(self):
         QApplication.quit()

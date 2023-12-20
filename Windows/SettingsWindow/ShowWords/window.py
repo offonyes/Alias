@@ -19,7 +19,7 @@ class ShowWords(QMainWindow, Ui_ShowWords):
         self.add_action.triggered.connect(self.update_database)
 
     def close_windows(self):
-        return
+        self.close()
 
     def create_table(self):
         cursor = self.db_connection.cursor()
@@ -44,11 +44,11 @@ class ShowWords(QMainWindow, Ui_ShowWords):
         self.menu.exec_(self.words_list.mapToGlobal(position))
 
     def update_database(self):
-        print("Размер окна ShowWords:", self.width(), "x", self.height())
-        window = AddWord(self)
-        window.show()
+        self.AWwindow = AddWord(self)
+        self.AWwindow.show()
 
     def load_categories(self, status = None):
+        self.category_combobox.clear()
         cursor = self.db_connection.cursor()
         cursor.execute('SELECT DISTINCT Category FROM Words')
         categories = [category[0] for category in cursor.fetchall()]
@@ -71,15 +71,15 @@ class ShowWords(QMainWindow, Ui_ShowWords):
         for word, explanation in words_data:
             item = f"{word} - {explanation}"
             self.words_list.addItem(item)
-        self.category_combobox.clear()
         self.load_categories(selected_category)
 
 
-def run_app():
-    app = QApplication(sys.argv)
-    window = ShowWords()
-    window.show()
-    sys.exit(app.exec_())
+    def on_AWwindow_closed(self):
+        self.setEnabled(True)
+        
+    def closeEvent(self, event):
+        if hasattr(self, 'AWwindow') and self.AWwindow.isVisible():
+            self.AWwindow.close()
+        self.parent().setEnabled(True)
+        event.accept()
 
-if __name__ == "__main__":
-    run_app()

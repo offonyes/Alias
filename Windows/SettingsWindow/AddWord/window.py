@@ -15,14 +15,11 @@ class AddWord(QMainWindow, UI_AddWord):
 
     def onChangeBackgroundClicked(self):
         fileName,  = QFileDialog.getOpenFileName(self, "Open Image", "", "Image Files (.png.jpg *.bmp)")
-
-
         if fileName:
             self.setStyleSheet(f"QWidget {{ background-image: url('{fileName}'); }}")
 
     
-    def load_categories(self, status = None):
-        
+    def load_categories(self, status = None):        
         cursor = self.db_connection.cursor()
         cursor.execute('SELECT DISTINCT Category FROM Words')
         categories = [category[0] for category in cursor.fetchall()]
@@ -44,3 +41,9 @@ class AddWord(QMainWindow, UI_AddWord):
             self.category_input.clear()
             self.ExplanationOfWord_input.clear()
             self.load_categories(category)
+        self.parent().load_categories(category)
+        self.parent().select_category()
+
+    def closeEvent(self, event):
+        event.accept()
+
