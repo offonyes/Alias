@@ -42,10 +42,10 @@ class Ui_MainSettings(object):
         self.LW_btn.setFont(font)
         self.gridLayout.addWidget(self.LW_btn, 4, 1, 1, 3)
 
-        self.ok_btn = QPushButton("Ok")
-        self.ok_btn.setMaximumSize(QSize(80, 25))
-        self.ok_btn.setFont(font)
-        self.gridLayout.addWidget(self.ok_btn, 5, 2, 1, 1)
+        self.save_btn = QPushButton("Save")
+        self.save_btn.setMaximumSize(QSize(80, 25))
+        self.save_btn.setFont(font)
+        self.gridLayout.addWidget(self.save_btn, 5, 2, 1, 1)
 
         self.timeEdit = QTimeEdit(Form)
         self.timeEdit.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
