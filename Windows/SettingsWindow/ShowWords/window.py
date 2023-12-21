@@ -1,7 +1,7 @@
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-import sqlite3, sys
+import sqlite3
 from .ShowWords import Ui_ShowWords
 from ..AddWord.window import AddWord
 
@@ -73,10 +73,6 @@ class ShowWords(QMainWindow, Ui_ShowWords):
             self.words_list.addItem(item)
         self.load_categories(selected_category)
 
-
-    def on_AWwindow_closed(self):
-        self.setEnabled(True)
-        
     def closeEvent(self, event):
         if hasattr(self, 'AWwindow') and self.AWwindow.isVisible():
             self.AWwindow.close()

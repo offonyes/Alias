@@ -2,7 +2,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from .MainWindow import Ui_MainWindow
-from ..SettingsWindow.Settings.window import MainSettings
+from ..SettingsWindow.window import MainSettings
 import sys
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -21,9 +21,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.MSetwindow.show()
         self.setEnabled(False)
         self.MSetwindow.setEnabled(True)
-
-    def on_MSetwindow_closed(self):
-        self.setEnabled(True)
 
     def closeEvent(self, event):
         # Обработка закрытия главного окна

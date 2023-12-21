@@ -4,7 +4,6 @@ from PyQt5.QtCore import *
 import sqlite3
 from .AddWord import UI_AddWord
 
-## ADD EXIT OR BACK
 class AddWord(QMainWindow, UI_AddWord):
     def __init__(self, *args, **kwargs):
         super(AddWord, self).__init__(*args, **kwargs)

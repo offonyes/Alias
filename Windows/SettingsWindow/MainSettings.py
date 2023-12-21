@@ -29,10 +29,10 @@ class Ui_MainSettings(object):
         self.ListWord_lbl.setFont(font)
         self.gridLayout.addWidget(self.ListWord_lbl, 4, 0, 1, 1)
 
-        self.Cacnel_btn = QPushButton("About")
-        self.Cacnel_btn.setMaximumSize(QSize(80, 25))
-        self.Cacnel_btn.setFont(font)
-        self.gridLayout.addWidget(self.Cacnel_btn, 5, 3, 1, 1)
+        self.about_btn = QPushButton("About")
+        self.about_btn.setMaximumSize(QSize(80, 25))
+        self.about_btn.setFont(font)
+        self.gridLayout.addWidget(self.about_btn, 5, 3, 1, 1)
 
         self.NT_btn = QPushButton("Open")
         self.NT_btn.setFont(font)
@@ -67,13 +67,3 @@ class Ui_MainSettings(object):
         self.gridLayout.addWidget(self.horizontalSlider, 2, 1, 1, 3)
 
         self.centralwidget.setLayout(self.gridLayout)
-
-
-# if __name__ == "__main__":
-#     import sys
-#     app = QApplication(sys.argv)
-#     Form = QWidget()
-#     ui = Ui_MainSettings()
-#     ui.setupUi(Form)
-#     Form.show()
-#     sys.exit(app.exec_())
