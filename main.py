@@ -1,4 +1,17 @@
-import Windows.MainWindow.window as wd
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from Windows.MainWindow.window import MainWindow
+import sys
 
-wd.run_app()
+
+def run_app():
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())
+
+if __name__ == "__main__":
+    run_app()
+
 

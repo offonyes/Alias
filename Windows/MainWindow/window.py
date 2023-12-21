@@ -15,30 +15,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def play_menu(self):
         print("play")
-
+        
+#Open Settings GUI
     def settings_menu(self):
         self.MSetwindow = MainSettings(self)
         self.MSetwindow.show()
         self.setEnabled(False)
         self.MSetwindow.setEnabled(True)
 
+#Checks if this GUI is closed and of closed than closes his subwindow
     def closeEvent(self, event):
-        # Обработка закрытия главного окна
         if hasattr(self, 'MSetwindow') and self.MSetwindow.isVisible():
             self.MSetwindow.close()
 
-
-    def close(self):
-        QApplication.quit()
-
-
-
-def run_app():
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
-
-if __name__ == "__main__":
-    run_app()
 
