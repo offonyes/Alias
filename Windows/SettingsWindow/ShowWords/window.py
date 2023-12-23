@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import sqlite3
 from .ShowWords import Ui_ShowWords
-from ..AddWord.window import AddWord
+from .AddWord.window import AddWord
 
 #Create GUI and connect functions
 class ShowWords(QMainWindow, Ui_ShowWords):

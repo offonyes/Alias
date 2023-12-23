@@ -5,6 +5,7 @@ import json
 from .MainSettings import Ui_MainSettings
 from .ShowWords.window import ShowWords
 from .About.window import AliasAbout
+from .TeamConfig.window import TeamConfig
 
 #Create GUI and connect functions
 class MainSettings(QMainWindow, Ui_MainSettings):
@@ -19,22 +20,26 @@ class MainSettings(QMainWindow, Ui_MainSettings):
         self.save_btn.clicked.connect(self.save_settings)
 
     def save_settings(self):
+        with open("Windows\\settings.json", "r") as file:
+            existing_settings = json.load(file)
+
         slider_position = self.horizontalSlider.value()
         time_value = self.timeEdit.time().toString(Qt.ISODate)
 
-        settings = {
+        new_settings = {
             "slider_position": slider_position,
             "time_value": time_value
         }
-
+        existing_settings.update(new_settings)
         with open("Windows\\settings.json", "w") as file:
-            json.dump(settings, file, indent=4)
+            json.dump(existing_settings, file, indent=4)
+        self.close()
 
     def load_settings(self):
         with open("Windows\\settings.json", "r") as file:
             settings = json.load(file)
             slider_position = settings.get("slider_position", 0)
-            time_value = settings.get("time_value", "00:00")
+            time_value = settings.get("time_value", "00:00:00")
 
             self.horizontalSlider.setValue(slider_position)
             self.timeEdit.setTime(QTime.fromString(time_value, Qt.ISODate))
@@ -45,9 +50,12 @@ class MainSettings(QMainWindow, Ui_MainSettings):
         if fileName:
             self.setStyleSheet(f"QWidget {{ background-image: url('{fileName}'); }}")
 
-#Open GUI for changing name of teams   
+#Open Team settings GUI
     def open_team_names(self):
-        return
+        self.TSwindow = TeamConfig(self)
+        self.TSwindow.show()
+        self.setEnabled(False)
+        self.TSwindow.setEnabled(True)
     
 #Open GUI that shows dictionary
     def open_list_words(self):
@@ -67,7 +75,8 @@ class MainSettings(QMainWindow, Ui_MainSettings):
             self.SWwindow.close()
         if hasattr(self, 'Aboutwindow') and self.Aboutwindow.isVisible():
             self.Aboutwindow.close()
-        
+        if hasattr(self, 'TSwindow') and self.TSwindow.isVisible():
+            self.TSwindow.close()
         self.parent().setEnabled(True)
         event.accept()
 

@@ -1,4 +1,22 @@
 {
-    "slider_position": 2,
-    "time_value": "00:01:00"
+    "slider_position": 4,
+    "time_value": "00:55:00",
+    "Team_Names": [
+        {
+            "First_Team_Name": "ea",
+            "Second_Team_Name": "ea",
+            "Third_Team_Name": "az",
+            "Fourth_Team_Name": "",
+            "Fifth_Team_Name": ""
+        }
+    ],
+    "Teams_colors": [
+        {
+            "First_Team_Color": "background-color: #bbffb7",
+            "Second_Team_Color": "",
+            "Third_Team_Color": "background-color: #cf57ff",
+            "Fourth_Team_Color": "background-color: #ff3030",
+            "Fifth_Team_Color": "background-color: #e4fcff"
+        }
+    ]
 }
