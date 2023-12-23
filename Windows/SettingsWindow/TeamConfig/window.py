@@ -27,11 +27,11 @@ class TeamConfig(QMainWindow, Ui_TeamConfig):
             self.ThirdTeamle.setText(settings.get("Team_Names", [{}])[0].get("Third_Team_Name"))
             self.FourthTeamle.setText(settings.get("Team_Names", [{}])[0].get("Fourth_Team_Name"))
             self.FifthTeamle.setText(settings.get("Team_Names", [{}])[0].get("Fifth_Team_Name"))
-            self.ColorFirstbtn.setStyleSheet(f"{settings.get("Teams_colors", [{}])[0].get("First_Team_Color")}")
-            self.ColorSecondbtn.setStyleSheet(f"{settings.get("Teams_colors", [{}])[0].get("Second_Team_Color")}")
-            self.ColorThirdbtn.setStyleSheet(f"{settings.get("Teams_colors", [{}])[0].get("Third_Team_Color")}")
-            self.ColorFourthbtn.setStyleSheet(f"{settings.get("Teams_colors", [{}])[0].get("Fourth_Team_Color")}")
-            self.ColorFifthbtn.setStyleSheet(f"{settings.get("Teams_colors", [{}])[0].get("Fifth_Team_Color")}")
+            self.ColorFirstbtn.setStyleSheet(f"{settings.get('Teams_colors', [{}])[0].get('First_Team_Color')}")
+            self.ColorSecondbtn.setStyleSheet(f"{settings.get('Teams_colors', [{}])[0].get('Second_Team_Color')}")
+            self.ColorThirdbtn.setStyleSheet(f"{settings.get('Teams_colors', [{}])[0].get('Third_Team_Color')}")
+            self.ColorFourthbtn.setStyleSheet(f"{settings.get('Teams_colors', [{}])[0].get('Fourth_Team_Color')}")
+            self.ColorFifthbtn.setStyleSheet(f"{settings.get('Teams_colors', [{}])[0].get('Fifth_Team_Color')}")
 
 #Save settings
     def save_settings(self):
