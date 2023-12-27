@@ -1,6 +1,6 @@
 QPushButton {
     background-color: rgb(230, 230, 0);
-    border: 5px solid black;
+    border: 2px solid black;
     border-radius: 8px;
     }
 QPushButton:hover {
@@ -9,3 +9,30 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: rgb(185, 185, 0);
     }
+/* Unchecked state */
+QCheckBox::indicator {
+    width: 20px;
+    height: 20px;
+}
+
+QCheckBox::indicator:unchecked {
+    border: 2px solid #555555;
+    background-color: #DDDDDD;
+}
+
+/* Checked state */
+QCheckBox::indicator:checked {
+    background-color: #66CC66;
+    border: 2px solid #339933;
+}
+
+/* Mouse-over/hover state */
+QCheckBox::indicator:hover {
+    background-color: #BBBBBB;
+}
+
+/* Disabled state */
+QCheckBox::indicator:disabled {
+    background-color: #AAAAAA;
+    border: 2px solid #888888;
+}
