@@ -24,8 +24,7 @@ class MainSettings(QMainWindow, Ui_MainSettings):
             existing_settings = json.load(file)
 
         slider_position = self.horizontalSlider.value()
-        time_value = self.timeEdit.time().toString(Qt.ISODate)
-
+        time_value = self.timeEdit.time().toString("mm:ss:zzz")
         new_settings = {
             "slider_position": slider_position,
             "time_value": time_value
@@ -39,10 +38,10 @@ class MainSettings(QMainWindow, Ui_MainSettings):
         with open("Windows\\settings.json", "r") as file:
             settings = json.load(file)
             slider_position = settings.get("slider_position", 0)
-            time_value = settings.get("time_value", "00:00:00")
+            time_value = settings.get("time_value", "00:00:000")
 
             self.horizontalSlider.setValue(slider_position)
-            self.timeEdit.setTime(QTime.fromString(time_value, Qt.ISODate))
+            self.timeEdit.setTime(QTime.fromString(time_value, "mm:ss:zzz"))
 
 #?Maybe add in future
     def onChangeBackgroundClicked(self):
