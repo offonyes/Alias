@@ -1,4 +1,4 @@
-| Язык | Ссылка |
+| Language | Link |
 |------|--------|
-| 🇺🇸 Английский | [English](./docs/en/README.md) |
+| 🇺🇸 English | [English](./docs/en/README.md) |
 | 🇷🇺 Русский | [Русский](./docs/ru/README.md) |
