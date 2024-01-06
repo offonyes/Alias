@@ -324,6 +324,8 @@ class Ui_MainWindow(object):
         self.timer = QTimer()
         self.timer.timeout.connect(self.Timer_func)
         self.timer.start(1)
+        self.blinkTimer = QTimer()
+        self.blinkTimer.timeout.connect(self.blinkTimerFunction)
 
         spacerItem16 = QSpacerItem(237, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem16)
@@ -357,3 +359,18 @@ class Ui_MainWindow(object):
             self.timer_widget.display(self.time_value.toString("mm:ss:zzz"))
         elif self.time_value.toString("mm:ss:zzz") == "00:00:000" and self.StartGame_btn.isHidden():
             print("Stop")
+            
+        if self.time_value.toString("mm:ss:zzz") <= "00:10:000" and not self.blinkTimer.isActive():
+            self.blinkTimer.start(500)  # Мигание каждые 500 мс
+
+        if self.time_value.toString("mm:ss:zzz") == "00:00:000":
+            self.blinkTimer.stop()
+            self.timer_widget.setStyleSheet("")
+            
+    def blinkTimerFunction(self):
+    # Мигание таймера путем изменения стиля
+        current_style = self.timer_widget.styleSheet()
+        if "background-color: red;" in current_style:
+            self.timer_widget.setStyleSheet("background-color: none;")
+        else:
+            self.timer_widget.setStyleSheet("background-color: red;")
