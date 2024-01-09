@@ -208,7 +208,7 @@ class Ui_MainWindow(object):
             self.time_valueRaw = settings.get("time_value", "00:00:000")
             self.time_value = QTime.fromString(self.time_valueRaw, "mm:ss:zzz")
            
-        self.TeamPoints = []
+        self.TeamPoints = [0 for _ in range(self.TeamNum)]
         self.TeamWords = []
 
         for i in range(self.TeamNum):
@@ -220,7 +220,6 @@ class Ui_MainWindow(object):
             TeamName.setMaximumSize(QSize(16777215, 60))
             TeamName.setAlignment(Qt.AlignCenter)
             self.TeamName.append(TeamName)
-            self.TeamPoints.append(0)
             self.gridLayout_5.addWidget(TeamName, 1, i, 1, 1)
 
             TeamWord = QListWidget(self.centralwidget_3)
@@ -231,7 +230,6 @@ class Ui_MainWindow(object):
             TeamWord.setMaximumSize(QSize(16777215, 250))
             self.TeamWords.append(TeamWord)
             self.gridLayout_5.addWidget(TeamWord, 2, i, 1, 1)
-        # self.TeamName = self.TeamName[5:]
 
         self.gridLayout_4.addLayout(self.gridLayout_5, 11, 0, 1, 5)
 

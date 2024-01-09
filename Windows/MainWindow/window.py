@@ -1,7 +1,7 @@
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-import json
+import json, random
 from .MainWindow import Ui_MainWindow
 from ..SettingsWindow.window import MainSettings
 
@@ -15,8 +15,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.Play_btn.clicked.connect(self.Category_menu)
         self.Settings_btn.clicked.connect(self.settings_menu)
         self.Exit_btn.clicked.connect(self.close)
-        self.Select_btn.clicked.connect(self.sellectall) 
-        self.Discard_btn.clicked.connect(self.discardall)
+        self.Select_btn.clicked.connect(lambda: self.chageState(2)) 
+        self.Discard_btn.clicked.connect(lambda: self.chageState(False))
         self.MainM_btn.clicked.connect(self.Main_menu)
         self.StartG_btn.clicked.connect(self.Start_menu)
         self.Hint_btn.clicked.connect(self.ShowHintOfWord)
@@ -29,6 +29,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def ShowHintOfWord(self):
         self.textBrowser.show()
         self.timer.stop()
+    
+    def ChooseWord(self, dct):
+        randomWord = random.choice(list(dct.keys()))
+        self.ShowingWord.setText(randomWord)
+        self.textBrowser.setText(self.WordExpl[randomWord])
+        self.WordExpl.pop(randomWord)
 
     def CountPoint(self, point):
         self.timer.start()
@@ -36,6 +42,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.TeamPoints[self.Team] = self.TeamPoints[self.Team] + point
         print(self.TeamPoints)
         self.TeamName[self.Team].setText(f"{self.TeamNameFF[self.Team]} | Points: {self.TeamPoints[self.Team]}")
+        self.ChooseWord(self.WordExpl)
 
     def Hide(self):
         self.Counted_btn.hide()
@@ -47,6 +54,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.timer.stop()
 
     def StartGame(self):
+        self.ChooseWord(self.WordExpl)
         self.StartGame_btn.hide()
         self.Counted_btn.show()
         self.NotCounted_btn.show()
@@ -58,9 +66,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.TeamWords[i].setStyleSheet("background-color: #ff90e6fc;")
             else:
                 self.TeamWords[i].setStyleSheet("")
+        
 
     def Start_menu(self):
         self.TeamNameFF = []
+        self.WordExpl = {}
         self.widget.setCurrentIndex(self.widget.currentIndex()+1)
         with open("Windows\\settings.json", "r") as file:
             settings = json.load(file)
@@ -71,17 +81,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Fifth_Team_Name"))
         for i in range(self.TeamNum):
             self.TeamName[i].setText(f"{self.TeamNameFF[i]} | Points: 0")
+            
+        self.SellCateg = [checkbox.text() for checkbox in self.checkbox if checkbox.checkState() == 2]
+
+        cursor = self.db_connection.cursor()
+        for n in self.SellCateg:
+        # Find words for category
+            cursor.execute("SELECT Word, ExplanationOfWord FROM Words WHERE Category=?", (n,))
+            words_data = cursor.fetchall()
+            for word, explanation in words_data:
+                self.WordExpl[word] = explanation
+        
         
     def Main_menu(self):
         self.widget.setCurrentIndex(0)
 
-    def sellectall(self):
+    def chageState(self, status):
         for checkbox in self.checkbox:
-            checkbox.setCheckState(2)
-    
-    def discardall(self):
-        for checkbox in self.checkbox:
-            checkbox.setCheckState(False)
+            checkbox.setCheckState(status)
 
     def Category_menu(self):
         self.widget.setCurrentIndex(self.widget.currentIndex()+1)
@@ -108,7 +125,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.blinkTimer.stop()
             self.timer_widget.setStyleSheet("")
             self.time_value = QTime.fromString(self.time_valueRaw, "mm:ss:zzz")    
-  
+        if self.widget.currentIndex() != 2:
+            self.Hide()
+            self.TeamWords[self.Team].setStyleSheet("")
+            self.blinkTimer.stop()
+            self.timer_widget.setStyleSheet("")
+            self.time_value = QTime.fromString(self.time_valueRaw, "mm:ss:zzz")    
+            self.TeamPoints = [0 for _ in range(self.TeamNum)]
         if self.time_value.toString("mm:ss:zzz") <= "00:10:000" and not self.blinkTimer.isActive():
             self.blinkTimer.start(500)  # Мигание каждые 500 мс
 
