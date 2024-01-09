@@ -70,10 +70,10 @@ class Ui_MainWindow(object):
         cursor.execute('SELECT DISTINCT Category FROM Words')
         self.categories = [category[0] for category in cursor.fetchall()]
         
+        #Page for category selector
         self.centralwidget_2 = QWidget()
         self.centralwidget_2.setObjectName("CS")
         self.centralwidget_2.setStyleSheet(styleSheet)
-
 
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
@@ -195,7 +195,7 @@ class Ui_MainWindow(object):
 "    font-weight: bold; /* Жирный текст */\n"
 "}\n"
 "")
-        
+        # Page for Game
         self.gridLayout_4 = QGridLayout(self.centralwidget_3)
         self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_4.setSpacing(0)
@@ -248,7 +248,6 @@ class Ui_MainWindow(object):
         self.ShowingWord.setFont(font)
         self.ShowingWord.setAlignment(Qt.AlignCenter)
         self.ShowingWord.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        self.ShowingWord.hide()
         self.gridLayout_5.addWidget(self.ShowingWord, 2, 0, 1, 2)
 
         self.Hint_btn = QPushButton("Hint", self.centralwidget_3)
@@ -257,7 +256,6 @@ class Ui_MainWindow(object):
         self.Hint_btn.setSizePolicy(sizePolicy)
         self.Hint_btn.setMinimumSize(QSize(175, 0))
         self.Hint_btn.setMaximumSize(QSize(195, 50))
-        self.Hint_btn.hide()
         self.gridLayout_5.addWidget(self.Hint_btn, 3, 1, 1, 1)
 
         self.NotCounted_btn = QPushButton("Not Counted",self.centralwidget_3)
@@ -266,7 +264,6 @@ class Ui_MainWindow(object):
         self.NotCounted_btn.setSizePolicy(sizePolicy)
         self.NotCounted_btn.setMinimumSize(QSize(175, 0))
         self.NotCounted_btn.setMaximumSize(QSize(195, 50))
-        self.NotCounted_btn.hide()
         self.gridLayout_5.addWidget(self.NotCounted_btn, 3, 0, 1, 1)
 
         self.Counted_btn = QPushButton("Counted",self.centralwidget_3)
@@ -275,7 +272,6 @@ class Ui_MainWindow(object):
         self.Counted_btn.setSizePolicy(sizePolicy)
         self.Counted_btn.setMinimumSize(QSize(350, 0))
         self.Counted_btn.setMaximumSize(QSize(390, 50))
-        self.Counted_btn.hide()
         self.gridLayout_5.addWidget(self.Counted_btn, 1, 0, 1, 2)
 
         self.StartGame_btn = QPushButton("Start", self.centralwidget_3)
@@ -323,7 +319,6 @@ class Ui_MainWindow(object):
 
         self.timer = QTimer()
         self.timer.timeout.connect(self.Timer_func)
-        self.timer.start(1)
         self.blinkTimer = QTimer()
         self.blinkTimer.timeout.connect(self.blinkTimerFunction)
 
@@ -346,31 +341,8 @@ class Ui_MainWindow(object):
         self.textBrowser.setMinimumSize(QSize(350, 50))
         self.textBrowser.setMaximumSize(QSize(16777215, 100))
         self.textBrowser.append("HELLO GREGORI")
-        self.textBrowser.hide()
         self.gridLayout_4.addWidget(self.textBrowser, 6, 1, 1, 3)
 
         self.widget.addWidget(self.centralwidget)
         self.widget.addWidget(self.centralwidget_2)
         self.widget.addWidget(self.centralwidget_3)
-
-    def Timer_func(self):
-        if self.time_value.toString("mm:ss:zzz") != "00:00:000" and self.StartGame_btn.isHidden():
-            self.time_value = self.time_value.addMSecs(-1)
-            self.timer_widget.display(self.time_value.toString("mm:ss:zzz"))
-        elif self.time_value.toString("mm:ss:zzz") == "00:00:000" and self.StartGame_btn.isHidden():
-            print("Stop")
-            
-        if self.time_value.toString("mm:ss:zzz") <= "00:10:000" and not self.blinkTimer.isActive():
-            self.blinkTimer.start(500)  # Мигание каждые 500 мс
-
-        if self.time_value.toString("mm:ss:zzz") == "00:00:000":
-            self.blinkTimer.stop()
-            self.timer_widget.setStyleSheet("")
-            
-    def blinkTimerFunction(self):
-    # Мигание таймера путем изменения стиля
-        current_style = self.timer_widget.styleSheet()
-        if "background-color: red;" in current_style:
-            self.timer_widget.setStyleSheet("background-color: none;")
-        else:
-            self.timer_widget.setStyleSheet("background-color: red;")
