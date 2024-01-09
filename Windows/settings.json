@@ -3,11 +3,11 @@
     "time_value": "00:15:000",
     "Team_Names": [
         {
-            "First_Team_Name": "ea",
-            "Second_Team_Name": "ea",
-            "Third_Team_Name": "az",
-            "Fourth_Team_Name": "",
-            "Fifth_Team_Name": ""
+            "First_Team_Name": "Cats",
+            "Second_Team_Name": "Dogs",
+            "Third_Team_Name": "Lions",
+            "Fourth_Team_Name": "Wolfs",
+            "Fifth_Team_Name": "Blue Whale"
         }
     ],
     "Teams_colors": [

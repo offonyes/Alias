@@ -65,10 +65,10 @@ class Ui_MainWindow(object):
         self.centralwidget.setLayout(self.gridLayout)
         self.centralwidget.setStyleSheet(styleSheet)
 
-        self.db_connection = sqlite3.connect('alias_game.db')
-        cursor = self.db_connection.cursor()
-        cursor.execute('SELECT DISTINCT Category FROM Words')
-        self.categories = [category[0] for category in cursor.fetchall()]
+        # self.db_connection = sqlite3.connect('alias_game.db')
+        # cursor = self.db_connection.cursor()
+        # cursor.execute('SELECT DISTINCT Category FROM Words')
+        # self.categories = [category[0] for category in cursor.fetchall()]
         
         #Page for category selector
         self.centralwidget_2 = QWidget()
@@ -118,48 +118,48 @@ class Ui_MainWindow(object):
         spacerItem9 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.gridLayout_3.addItem(spacerItem9, 0, 3, 1, 1)
 
-        count = 5
-        max_per_row = 7
-        self.checkbox = []
-        while self.categories:
-            count +=1
-            current_row_categories = self.categories[:max_per_row]
-            self.categories = self.categories[max_per_row:]
+        # count = 5
+        # max_per_row = 7
+        # self.checkbox = []
+        # while self.categories:
+        #     count +=1
+        #     current_row_categories = self.categories[:max_per_row]
+        #     self.categories = self.categories[max_per_row:]
 
-            row_widget = QWidget(self.centralwidget_2)
-            row_widget.setMaximumSize(QSize(60, 60))
+        #     row_widget = QWidget(self.centralwidget_2)
+        #     row_widget.setMaximumSize(QSize(60, 60))
 
-            row_layout = QHBoxLayout(row_widget)
-            row_layout.setSizeConstraint(QLayout.SetMinAndMaxSize)
-            row_layout.setContentsMargins(25, -1, -1, -1)
-            row_layout.setSpacing(0)
+        #     row_layout = QHBoxLayout(row_widget)
+        #     row_layout.setSizeConstraint(QLayout.SetMinAndMaxSize)
+        #     row_layout.setContentsMargins(25, -1, -1, -1)
+        #     row_layout.setSpacing(0)
 
-            # Calculate the number of empty spaces for centering
-            num_empty_spaces = max_per_row - len(current_row_categories)
-            left_spaces = num_empty_spaces // 2
-            right_spaces = left_spaces
+        #     # Calculate the number of empty spaces for centering
+        #     num_empty_spaces = max_per_row - len(current_row_categories)
+        #     left_spaces = num_empty_spaces // 2
+        #     right_spaces = left_spaces
 
-            # Add empty spaces for centering
-            for _ in range(left_spaces):
-                row_layout.addWidget(QWidget(row_widget))
+        #     # Add empty spaces for centering
+        #     for _ in range(left_spaces):
+        #         row_layout.addWidget(QWidget(row_widget))
 
-            # Add checkboxes to the layout
-            for category in current_row_categories:
-                checkbox = QCheckBox(category, row_widget)
-                checkbox.setFont(font)
-                self.checkbox.append(checkbox)
-                row_layout.addWidget(checkbox)
+        #     # Add checkboxes to the layout
+        #     for category in current_row_categories:
+        #         checkbox = QCheckBox(category, row_widget)
+        #         checkbox.setFont(font)
+        #         self.checkbox.append(checkbox)
+        #         row_layout.addWidget(checkbox)
 
-            # Add remaining empty spaces for centering
-            for _ in range(right_spaces):
-                row_layout.addWidget(QWidget())
-            self.gridLayout_3.addWidget(row_widget, count,1,1,4)
+        #     # Add remaining empty spaces for centering
+        #     for _ in range(right_spaces):
+        #         row_layout.addWidget(QWidget())
+        #     self.gridLayout_3.addWidget(row_widget, count,1,1,4)
 
 
-        spacerItem10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.gridLayout_3.addItem(spacerItem10, count + 2, 3, 1, 1)
-        spacerItem11 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
-        self.gridLayout_3.addItem(spacerItem11, count + 3, 0, 1, 1)
+        # spacerItem10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Expanding)
+        # self.gridLayout_3.addItem(spacerItem10, count + 2, 3, 1, 1)
+        # spacerItem11 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        # self.gridLayout_3.addItem(spacerItem11, count + 3, 0, 1, 1)
 
         self.horizontalWidget_2 = QWidget(self.centralwidget_2)
         self.horizontalWidget_2.setMaximumSize(QSize(16777215, 90))
@@ -182,7 +182,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_8.addWidget(self.StartG_btn)
 
-        self.gridLayout_3.addWidget(self.horizontalWidget_2, count+3, 3, 1, 1)
+        # self.gridLayout_3.addWidget(self.horizontalWidget_2, count+3, 3, 1, 1)
 
         self.centralwidget_3 = QWidget()
         self.centralwidget_3.setStyleSheet("QLabel {\n"
@@ -201,25 +201,26 @@ class Ui_MainWindow(object):
         self.gridLayout_4.setSpacing(0)
 
         self.gridLayout_5 = QGridLayout()
-
+        self.TeamName = []
         with open("Windows\\settings.json", "r") as file:
             settings = json.load(file)
-            slider_position = settings.get("slider_position", 0)
-            self.time_value = settings.get("time_value", "00:00:000")
-            self.time_value = QTime.fromString(self.time_value, "mm:ss:zzz")
-            
-        self.TeamPointAndName = []
+            self.TeamNum = settings.get("slider_position", 0)
+            self.time_valueRaw = settings.get("time_value", "00:00:000")
+            self.time_value = QTime.fromString(self.time_valueRaw, "mm:ss:zzz")
+           
+        self.TeamPoints = []
         self.TeamWords = []
 
-        for i in range(slider_position):
-            TeamName = QLabel(f"Team {i+1} | Points: 0", self.centralwidget_3)
+        for i in range(self.TeamNum):
+            TeamName = QLabel(self.centralwidget_3)
             sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
             sizePolicy.setHeightForWidth(TeamName.sizePolicy().hasHeightForWidth())
             TeamName.setSizePolicy(sizePolicy)
             TeamName.setMinimumSize(QSize(172, 41))
             TeamName.setMaximumSize(QSize(16777215, 60))
             TeamName.setAlignment(Qt.AlignCenter)
-            self.TeamPointAndName.append(TeamName)
+            self.TeamName.append(TeamName)
+            self.TeamPoints.append(0)
             self.gridLayout_5.addWidget(TeamName, 1, i, 1, 1)
 
             TeamWord = QListWidget(self.centralwidget_3)
@@ -230,6 +231,7 @@ class Ui_MainWindow(object):
             TeamWord.setMaximumSize(QSize(16777215, 250))
             self.TeamWords.append(TeamWord)
             self.gridLayout_5.addWidget(TeamWord, 2, i, 1, 1)
+        # self.TeamName = self.TeamName[5:]
 
         self.gridLayout_4.addLayout(self.gridLayout_5, 11, 0, 1, 5)
 
@@ -314,7 +316,6 @@ class Ui_MainWindow(object):
         self.timer_widget.setFont(font)
         self.timer_widget.setFrameShape(QFrame.NoFrame)
         self.timer_widget.setDigitCount(9)
-        self.timer_widget.display(self.time_value.toString("mm:ss:zzz"))
         self.horizontalLayout_2.addWidget(self.timer_widget)
 
         self.timer = QTimer()
