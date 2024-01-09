@@ -19,9 +19,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.Hint_btn.clicked.connect(self.ShowHintOfWord)
         self.StartGame_btn.clicked.connect(self.StartGame)
         self.BackToMM_btn.clicked.connect(self.Main_menu)
+        self.Counted_btn.clicked.connect(self.CountPoint, 1)
+        self.NotCounted_btn.clicked.connect(self.CountPoint, 0)
+        self.Hide()
 
     def ShowHintOfWord(self):
         self.textBrowser.show()
+        self.timer.stop()
+
+    def CountPoint(self, point):
+        self.timer.start()
+        self.textBrowser.hide()
+
+    def Hide(self):
+        self.Counted_btn.hide()
+        self.NotCounted_btn.hide()
+        self.Hint_btn.hide()
+        self.ShowingWord.hide()
+        self.textBrowser.hide()
+        self.StartGame_btn.show()
 
     def StartGame(self):
         self.StartGame_btn.hide()
@@ -29,6 +45,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.NotCounted_btn.show()
         self.ShowingWord.show()
         self.Hint_btn.show()
+        self.timer.start(1)
 
     def Start_menu(self):
         self.widget.setCurrentIndex(self.widget.currentIndex()+1)
@@ -58,4 +75,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if hasattr(self, 'MSetwindow') and self.MSetwindow.isVisible():
             self.MSetwindow.close()
 
+    def Timer_func(self):
+        if self.time_value.toString("mm:ss:zzz") != "00:00:000":
+            self.time_value = self.time_value.addMSecs(-1)
+            self.timer_widget.display(self.time_value.toString("mm:ss:zzz"))
+        if self.time_value.toString("mm:ss:zzz") == "00:00:000":
+            print("Stop")
+            
+        if self.time_value.toString("mm:ss:zzz") <= "00:10:000" and not self.blinkTimer.isActive():
+            self.blinkTimer.start(500)  # Мигание каждые 500 мс
+
+        if self.time_value.toString("mm:ss:zzz") == "00:00:000":
+            self.blinkTimer.stop()
+            self.timer_widget.setStyleSheet("")
+            
+    def blinkTimerFunction(self):
+    # Мигание таймера путем изменения стиля
+        current_style = self.timer_widget.styleSheet()
+        if "background-color: red;" in current_style:
+            self.timer_widget.setStyleSheet("background-color: none;")
+        else:
+            self.timer_widget.setStyleSheet("background-color: red;")
 
