@@ -78,7 +78,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             else:
                 self.TeamWords[i].setStyleSheet("")
         
-
     def Start_menu(self):
         self.SellCateg = [checkbox.text() for checkbox in self.checkbox if checkbox.checkState() == 2]
         if not self.SellCateg:
@@ -87,7 +86,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             for team_word_list in self.TeamWords:
                 team_word_list.clear()
+            self.Team = 0
             self.TeamNameFF = []
+            self.TeamColor = []
             self.WordExpl = {}
             self.widget.setCurrentIndex(self.widget.currentIndex()+1)
             with open("Windows\\settings.json", "r") as file:
@@ -97,8 +98,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Third_Team_Name"))
                 self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Fourth_Team_Name"))
                 self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Fifth_Team_Name"))
+                self.TeamColor.append(settings.get('Teams_colors', [{}])[0].get('First_Team_Color'))
+                self.TeamColor.append(settings.get('Teams_colors', [{}])[0].get('Second_Team_Color'))
+                self.TeamColor.append(settings.get('Teams_colors', [{}])[0].get('Third_Team_Color'))
+                self.TeamColor.append(settings.get('Teams_colors', [{}])[0].get('Fourth_Team_Color'))
+                self.TeamColor.append(settings.get('Teams_colors', [{}])[0].get('Fifth_Team_Color'))
+            print(self.TeamColor)
             for i in range(self.TeamNum):
                 self.TeamName[i].setText(f"{self.TeamNameFF[i]} | Points: 0")
+                self.TeamName[i].setStyleSheet(f"{self.TeamColor[i]}")
                 
             self.SellCateg = [checkbox.text() for checkbox in self.checkbox if checkbox.checkState() == 2]
             
