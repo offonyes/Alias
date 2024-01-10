@@ -22,8 +22,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.Hint_btn.clicked.connect(self.ShowHintOfWord)
         self.StartGame_btn.clicked.connect(self.StartGame)
         self.BackToMM_btn.clicked.connect(self.Main_menu)
-        self.Counted_btn.clicked.connect(lambda: self.CountPoint(1))
-        self.NotCounted_btn.clicked.connect(lambda: self.CountPoint(0))
+        self.Counted_btn.clicked.connect(lambda: self.CountPoint(True))
+        self.NotCounted_btn.clicked.connect(lambda: self.CountPoint(False))
         self.Hide()
 
     def ShowHintOfWord(self):
@@ -31,17 +31,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.timer.stop()
     
     def ChooseWord(self, dct):
-        randomWord = random.choice(list(dct.keys()))
-        self.ShowingWord.setText(randomWord)
-        self.textBrowser.setText(self.WordExpl[randomWord])
-        self.WordExpl.pop(randomWord)
+        try:
+            self.randomWord = random.choice(list(dct.keys()))
+            self.ShowingWord.setText(self.randomWord)
+            self.textBrowser.setText(self.WordExpl[self.randomWord])
+            self.WordExpl.pop(self.randomWord)
+        except Exception as e:
+            error_message = ("The words have run out.\nReturn to the main page and add words to the database!")
+            self.show_error_message(error_message)
 
     def CountPoint(self, point):
         self.timer.start()
         self.textBrowser.hide()
-        self.TeamPoints[self.Team] = self.TeamPoints[self.Team] + point
         print(self.TeamPoints)
-        self.TeamName[self.Team].setText(f"{self.TeamNameFF[self.Team]} | Points: {self.TeamPoints[self.Team]}")
+        randomWordItem = QListWidgetItem(self.randomWord)  # Create QListWidgetItem
+        if point:
+            self.TeamPoints[self.Team] += point
+            self.TeamName[self.Team].setText(f"{self.TeamNameFF[self.Team]} | Points: {self.TeamPoints[self.Team]}")
+            randomWordItem.setForeground(QColor("green"))  # Set the foreground color
+        else:
+            randomWordItem.setForeground(QColor("red"))  # Set the foreground color
+
+        self.TeamWords[self.Team].addItem(randomWordItem)  # Add the item to QListWidget
         self.ChooseWord(self.WordExpl)
 
     def Hide(self):
@@ -69,28 +80,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         
 
     def Start_menu(self):
-        self.TeamNameFF = []
-        self.WordExpl = {}
-        self.widget.setCurrentIndex(self.widget.currentIndex()+1)
-        with open("Windows\\settings.json", "r") as file:
-            settings = json.load(file)
-            self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("First_Team_Name"))
-            self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Second_Team_Name"))
-            self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Third_Team_Name"))
-            self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Fourth_Team_Name"))
-            self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Fifth_Team_Name"))
-        for i in range(self.TeamNum):
-            self.TeamName[i].setText(f"{self.TeamNameFF[i]} | Points: 0")
-            
         self.SellCateg = [checkbox.text() for checkbox in self.checkbox if checkbox.checkState() == 2]
-
-        cursor = self.db_connection.cursor()
-        for n in self.SellCateg:
-        # Find words for category
-            cursor.execute("SELECT Word, ExplanationOfWord FROM Words WHERE Category=?", (n,))
-            words_data = cursor.fetchall()
-            for word, explanation in words_data:
-                self.WordExpl[word] = explanation
+        if not self.SellCateg:
+            error_message = ("You forgot to choose category!\nChoose One")
+            self.show_error_message(error_message)
+        else:
+            for team_word_list in self.TeamWords:
+                team_word_list.clear()
+            self.TeamNameFF = []
+            self.WordExpl = {}
+            self.widget.setCurrentIndex(self.widget.currentIndex()+1)
+            with open("Windows\\settings.json", "r") as file:
+                settings = json.load(file)
+                self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("First_Team_Name"))
+                self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Second_Team_Name"))
+                self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Third_Team_Name"))
+                self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Fourth_Team_Name"))
+                self.TeamNameFF.append(settings.get("Team_Names", [{}])[0].get("Fifth_Team_Name"))
+            for i in range(self.TeamNum):
+                self.TeamName[i].setText(f"{self.TeamNameFF[i]} | Points: 0")
+                
+            self.SellCateg = [checkbox.text() for checkbox in self.checkbox if checkbox.checkState() == 2]
+            
+            cursor = self.db_connection.cursor()
+            for n in self.SellCateg:
+            # Find words for category
+                cursor.execute("SELECT Word, ExplanationOfWord FROM Words WHERE Category=?", (n,))
+                words_data = cursor.fetchall()
+                for word, explanation in words_data:
+                    self.WordExpl[word] = explanation
         
         
     def Main_menu(self):
@@ -144,3 +162,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             self.timer_widget.setStyleSheet("background-color: red;")
 
+    def show_error_message(self, message):
+        error_box = QMessageBox()
+        error_box.setIcon(QMessageBox.Warning)
+        error_box.setWindowIcon(QIcon('assets\\Alias_logo.png'))
+        error_box.setWindowTitle("Error")
+        error_box.setText(message)
+        error_box.setStandardButtons(QMessageBox.Ok)
+        error_box.exec_()
