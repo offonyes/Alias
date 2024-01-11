@@ -103,7 +103,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.TeamColor.append(settings.get('Teams_colors', [{}])[0].get('Third_Team_Color'))
                 self.TeamColor.append(settings.get('Teams_colors', [{}])[0].get('Fourth_Team_Color'))
                 self.TeamColor.append(settings.get('Teams_colors', [{}])[0].get('Fifth_Team_Color'))
-            print(self.TeamColor)
             for i in range(self.TeamNum):
                 self.TeamName[i].setText(f"{self.TeamNameFF[i]} | Points: 0")
                 self.TeamName[i].setStyleSheet(f"{self.TeamColor[i]}")
