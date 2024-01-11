@@ -185,16 +185,15 @@ class Ui_MainWindow(object):
         self.gridLayout_3.addWidget(self.horizontalWidget_2, count+3, 3, 1, 1)
 
         self.centralwidget_3 = QWidget()
-        self.centralwidget_3.setStyleSheet("QLabel {\n"
-"    color: #FFFFFF; /* Белый цвет текста */\n"
-"    background-color: #3498db; /* Фоновый цвет - синий (замените этот код на нужный) */\n"
-"    border: 2px solid #2980b9; /* Цвет рамки (замените этот код на нужный) */\n"
-"    border-radius: 8px; /* Закругление углов */\n"
-"    padding: 10px; /* Отступы внутри виджета */\n"
-"    font-size: 14px; /* Размер шрифта */\n"
-"    font-weight: bold; /* Жирный текст */\n"
-"}\n"
-"")
+        self.centralwidget_3.setStyleSheet("QLabel#Team {\n"
+"    color: #FFFFFF; \n"
+"    background-color: #3498db; \n"
+"    border: 2px solid #2980b9; \n"
+"    border-radius: 8px; \n"
+"    padding: 10px; \n"
+"    font-size: 14px; \n"
+"    font-weight: bold;}")
+
         # Page for Game
         self.gridLayout_4 = QGridLayout(self.centralwidget_3)
         self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
@@ -213,6 +212,7 @@ class Ui_MainWindow(object):
 
         for i in range(self.TeamNum):
             TeamName = QLabel(self.centralwidget_3)
+            TeamName.setObjectName("Team")
             sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
             sizePolicy.setHeightForWidth(TeamName.sizePolicy().hasHeightForWidth())
             TeamName.setSizePolicy(sizePolicy)
@@ -227,7 +227,7 @@ class Ui_MainWindow(object):
             sizePolicy.setHeightForWidth(TeamWord.sizePolicy().hasHeightForWidth())
             TeamWord.setSizePolicy(sizePolicy)
             TeamWord.setMinimumSize(QSize(0, 100))
-            TeamWord.setMaximumSize(QSize(16777215, 250))
+            TeamWord.setMaximumSize(QSize(16777215, 9999))
             self.TeamWords.append(TeamWord)
             self.gridLayout_5.addWidget(TeamWord, 2, i, 1, 1)
 
@@ -237,6 +237,7 @@ class Ui_MainWindow(object):
         self.gridLayout_5.setSpacing(0)
 
         self.ShowingWord = QLabel("Word", self.centralwidget_3)
+        self.ShowingWord.setObjectName("Team")
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
         sizePolicy.setHeightForWidth(self.ShowingWord.sizePolicy().hasHeightForWidth())
         self.ShowingWord.setSizePolicy(sizePolicy)
@@ -324,6 +325,17 @@ class Ui_MainWindow(object):
         spacerItem16 = QSpacerItem(237, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem16)
 
+        self.Congrat = QLabel("Congratulations!")
+        font = QFont()
+        font.setPointSize(48)
+        self.Congrat.setFont(font)
+        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Minimum)
+        sizePolicy.setHeightForWidth(self.Congrat.sizePolicy().hasHeightForWidth())
+        self.Congrat.setSizePolicy(sizePolicy)
+        self.Congrat.setObjectName("Congrat")
+        self.Congrat.setMaximumSize(QSize(99999, 90))
+        self.Congrat.setAlignment(Qt.AlignCenter)
+        self.gridLayout_4.addWidget(self.Congrat, 2, 0, 1, 5)
         self.gridLayout_4.addLayout(self.horizontalLayout_2, 2, 0, 1, 5)
 
         spacerItem17 = QSpacerItem(105, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)

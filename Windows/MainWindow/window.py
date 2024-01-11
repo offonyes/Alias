@@ -10,6 +10,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.Team = 0
         self.setupUi(self)
+        self.Congrat.hide()
         self.textBrowser.hide()
         self.widget.setCurrentIndex(0)
         self.Play_btn.clicked.connect(self.Category_menu)
@@ -63,6 +64,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.StartGame_btn.show()
         self.timer_widget.display(self.time_valueRaw)       
         self.timer.stop()
+    
+    def EndGame(self):
+        self.timer_widget.hide()
+        self.Congrat.show()
 
     def StartGame(self):
         self.ChooseWord(self.WordExpl)
@@ -117,7 +122,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 for word, explanation in words_data:
                     self.WordExpl[word] = explanation
         
-        
     def Main_menu(self):
         self.widget.setCurrentIndex(0)
 
@@ -145,11 +149,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.time_value = self.time_value.addMSecs(-1)
             self.timer_widget.display(self.time_value.toString("mm:ss:zzz"))
         if self.time_value.toString("mm:ss:zzz") == "00:00:000":
-            self.Team +=1     
-            self.Hide()
-            self.blinkTimer.stop()
-            self.timer_widget.setStyleSheet("")
-            self.time_value = QTime.fromString(self.time_valueRaw, "mm:ss:zzz")    
+            if self.Team >= self.TeamNum-1:
+                self.Hide()
+                self.blinkTimer.stop()
+                self.StartGame_btn.hide()
+                self.EndGame()
+            else:
+                self.Team +=1     
+                self.Hide()
+                self.blinkTimer.stop()
+                self.timer_widget.setStyleSheet("")
+                self.time_value = QTime.fromString(self.time_valueRaw, "mm:ss:zzz")    
         if self.widget.currentIndex() != 2:
             self.Hide()
             self.TeamWords[self.Team].setStyleSheet("")
