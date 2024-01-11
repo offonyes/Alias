@@ -35,7 +35,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         try:
             self.randomWord = random.choice(list(dct.keys()))
             self.ShowingWord.setText(self.randomWord)
-            self.textBrowser.setText(self.WordExpl[self.randomWord])
+            self.randExpl = self.WordExpl[self.randomWord]
+            self.textBrowser.setText(self.randExpl)
             self.WordExpl.pop(self.randomWord)
         except Exception as e:
             error_message = ("The words have run out.\nReturn to the main page and add words to the database!")
@@ -52,6 +53,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             randomWordItem.setForeground(QColor("green"))  # Set the foreground color
         else:
             randomWordItem.setForeground(QColor("red"))  # Set the foreground color
+
+        randomWordItem.setToolTip(f"Explanation: {self.randExpl}")
 
         self.TeamWords[self.Team].addItem(randomWordItem)  # Add the item to QListWidget
         self.ChooseWord(self.WordExpl)

@@ -22,13 +22,13 @@ QCheckBox::indicator:unchecked {
 
 /* Checked state */
 QCheckBox::indicator:checked {
-    background-color: #ccd637;
+    background-color: #b5c200;
     border: 2px solid #666b24;
 }
 
 /* Mouse-over/hover state */
 QCheckBox::indicator:hover {
-    background-color: #ff000000;
+    background-color: #fff3f2a5;
 }
 
 /* Disabled state */

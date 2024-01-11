@@ -233,8 +233,8 @@ class Ui_MainWindow(object):
 
         self.gridLayout_4.addLayout(self.gridLayout_5, 11, 0, 1, 5)
 
-        self.gridLayout_5 = QGridLayout()
-        self.gridLayout_5.setSpacing(0)
+        self.gridLayout_6 = QGridLayout()
+        self.gridLayout_6.setSpacing(0)
 
         self.ShowingWord = QLabel("Word", self.centralwidget_3)
         self.ShowingWord.setObjectName("Team")
@@ -249,7 +249,7 @@ class Ui_MainWindow(object):
         self.ShowingWord.setFont(font)
         self.ShowingWord.setAlignment(Qt.AlignCenter)
         self.ShowingWord.setTextInteractionFlags(Qt.TextSelectableByMouse)
-        self.gridLayout_5.addWidget(self.ShowingWord, 2, 0, 1, 2)
+        self.gridLayout_6.addWidget(self.ShowingWord, 2, 0, 1, 2)
 
         self.Hint_btn = QPushButton("Hint", self.centralwidget_3)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
@@ -257,7 +257,7 @@ class Ui_MainWindow(object):
         self.Hint_btn.setSizePolicy(sizePolicy)
         self.Hint_btn.setMinimumSize(QSize(175, 0))
         self.Hint_btn.setMaximumSize(QSize(195, 50))
-        self.gridLayout_5.addWidget(self.Hint_btn, 3, 1, 1, 1)
+        self.gridLayout_6.addWidget(self.Hint_btn, 3, 1, 1, 1)
 
         self.NotCounted_btn = QPushButton("Not Counted",self.centralwidget_3)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
@@ -265,7 +265,7 @@ class Ui_MainWindow(object):
         self.NotCounted_btn.setSizePolicy(sizePolicy)
         self.NotCounted_btn.setMinimumSize(QSize(175, 0))
         self.NotCounted_btn.setMaximumSize(QSize(195, 50))
-        self.gridLayout_5.addWidget(self.NotCounted_btn, 3, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.NotCounted_btn, 3, 0, 1, 1)
 
         self.Counted_btn = QPushButton("Counted",self.centralwidget_3)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
@@ -273,7 +273,7 @@ class Ui_MainWindow(object):
         self.Counted_btn.setSizePolicy(sizePolicy)
         self.Counted_btn.setMinimumSize(QSize(350, 0))
         self.Counted_btn.setMaximumSize(QSize(390, 50))
-        self.gridLayout_5.addWidget(self.Counted_btn, 1, 0, 1, 2)
+        self.gridLayout_6.addWidget(self.Counted_btn, 1, 0, 1, 2)
 
         self.StartGame_btn = QPushButton("Start", self.centralwidget_3)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
@@ -281,7 +281,7 @@ class Ui_MainWindow(object):
         self.StartGame_btn.setMinimumSize(QSize(350, 50))
         self.StartGame_btn.setMaximumSize(QSize(39990, 100))
         self.gridLayout_4.addWidget(self.StartGame_btn, 5, 2, 1, 1)
-        self.gridLayout_4.addLayout(self.gridLayout_5, 5, 2, 1, 1)
+        self.gridLayout_4.addLayout(self.gridLayout_6, 5, 2, 1, 1)
 
         self.BackToMM_btn = QPushButton("Main menu", self.centralwidget_3)
         sizePolicy = QSizePolicy(QSizePolicy.Maximum, QSizePolicy.Minimum)
