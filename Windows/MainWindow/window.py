@@ -10,8 +10,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
         self.Team = 0
         self.setupUi(self)
-        self.Congrat.hide()
-        self.textBrowser.hide()
         self.widget.setCurrentIndex(0)
         self.Play_btn.clicked.connect(self.Category_menu)
         self.Settings_btn.clicked.connect(self.settings_menu)
@@ -25,6 +23,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.BackToMM_btn.clicked.connect(self.Main_menu)
         self.Counted_btn.clicked.connect(lambda: self.CountPoint(True))
         self.NotCounted_btn.clicked.connect(lambda: self.CountPoint(False))
+        self.textBrowser.hide()
+        self.Congrat.hide()
         self.Hide()
 
     def ShowHintOfWord(self):
@@ -45,7 +45,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def CountPoint(self, point):
         self.timer.start()
         self.textBrowser.hide()
-        print(self.TeamPoints)
         randomWordItem = QListWidgetItem(self.randomWord)  # Create QListWidgetItem
         if point:
             self.TeamPoints[self.Team] += point
@@ -58,6 +57,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.TeamWords[self.Team].addItem(randomWordItem)  # Add the item to QListWidget
         self.ChooseWord(self.WordExpl)
+        print(self.TeamPoints)
 
     def Hide(self):
         self.Counted_btn.hide()
@@ -124,8 +124,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 words_data = cursor.fetchall()
                 for word, explanation in words_data:
                     self.WordExpl[word] = explanation
+        if not self.timer_widget.isVisible():
+            self.Congrat.hide()
+            self.timer_widget.show()
+            self.StartGame_btn.show()
+
         
     def Main_menu(self):
+        if self.widget.currentIndex() == 2:
+            self.Hide()
+            self.TeamWords[self.Team].setStyleSheet("")
+            self.blinkTimer.stop()
+            self.timer_widget.setStyleSheet("")
+            self.time_value = QTime.fromString(self.time_valueRaw, "mm:ss:zzz")    
+            self.TeamPoints = [0 for _ in range(self.TeamNum)]
         self.widget.setCurrentIndex(0)
 
     def chageState(self, status):
@@ -163,13 +175,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.blinkTimer.stop()
                 self.timer_widget.setStyleSheet("")
                 self.time_value = QTime.fromString(self.time_valueRaw, "mm:ss:zzz")    
-        if self.widget.currentIndex() != 2:
-            self.Hide()
-            self.TeamWords[self.Team].setStyleSheet("")
-            self.blinkTimer.stop()
-            self.timer_widget.setStyleSheet("")
-            self.time_value = QTime.fromString(self.time_valueRaw, "mm:ss:zzz")    
-            self.TeamPoints = [0 for _ in range(self.TeamNum)]
+        # if self.widget.currentIndex() != 2:
+        #     self.Hide()
+        #     self.TeamWords[self.Team].setStyleSheet("")
+        #     self.blinkTimer.stop()
+        #     self.timer_widget.setStyleSheet("")
+        #     self.time_value = QTime.fromString(self.time_valueRaw, "mm:ss:zzz")    
+        #     self.TeamPoints = [0 for _ in range(self.TeamNum)]
+
         if self.time_value.toString("mm:ss:zzz") <= "00:10:000" and not self.blinkTimer.isActive():
             self.blinkTimer.start(500)  # Мигание каждые 500 мс
 
