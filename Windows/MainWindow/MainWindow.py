@@ -18,6 +18,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(Form.sizePolicy().hasHeightForWidth())
         Form.setSizePolicy(sizePolicy)
         Form.setStyleSheet("QWidget [objectName=\"MM\"]{border-image:url(:/newPrefix/assets/Alias.png);}")
+        
         Form.setStyleSheet("QWidget [objectName=\"CS\"]{border-image:url(:/newPrefix/AliasBG.png);}")
         self.widget = QStackedWidget()
         self.centralwidget = QWidget()
