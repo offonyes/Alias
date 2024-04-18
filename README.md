@@ -2,7 +2,7 @@
 
 ## Description
 
-"Aglias" is an exciting game in which teams take turns explaining words to their team within a limited time. For each successfully explained word, a team earns points. The goal of the game is to score the maximum number of points and defeat other teams.
+"Alias" is an exciting game in which teams take turns explaining words to their team within a limited time. For each successfully explained word, a team earns points. The goal of the game is to score the maximum number of points and defeat other teams.
 
 ## Game Rules
 
