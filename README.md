@@ -1,4 +1,4 @@
-# Aglias
+# Alias
 
 ## Description
 
